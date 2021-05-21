@@ -14,7 +14,10 @@ class _Page1State extends State<Page1> {
     return Column(
       children: [
         SizedBox(height: 40.0),
-        Text('Nací el...', style: TextStyle(fontSize: 18.0)),
+        Text(
+          '( Nací el... )',
+          style: TextStyle(fontSize: 40.0, fontFamily: 'Milla'),
+        ),
         FechaWidget(),
         _boton(),
       ],
@@ -63,11 +66,14 @@ class _Page1State extends State<Page1> {
               ),
               Column(
                 children: [
-                  SizedBox(height: 50.0),
+                  SizedBox(height: 40.0),
                   Text(
-                    'Tengo:\n\n31 años, 10 meses, 19 días',
+                    '( Tengo )\n\n31 años, 10 meses, 19 días',
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white, fontSize: 20.0),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 40.0,
+                        fontFamily: 'Milla'),
                   ),
                 ],
               ),
@@ -102,8 +108,11 @@ void alertaCambiarFecha(BuildContext context) {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Cambiar fecha para el cálculo (fecha de hoy por default):',
-                style: TextStyle(fontSize: 18.0),
+                'Cambiar fecha para el cálculo [fecha de hoy por default]:',
+                style: TextStyle(
+                  fontSize: 16.0,
+                  // fontFamily: 'Milla',
+                ),
               ),
               FechaWidget(h: 40.0, v: 20.0),
             ],

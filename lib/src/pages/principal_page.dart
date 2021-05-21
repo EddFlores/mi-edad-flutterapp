@@ -23,7 +23,9 @@ class _PrincipalPageState extends State<PrincipalPage> {
               '    Fecha: $dia/$mes/$anio',
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 16.0,
+                fontSize: 18.0,
+                fontStyle: FontStyle.italic,
+                // fontFamily: 'Milla',
               ),
             ),
           ),
