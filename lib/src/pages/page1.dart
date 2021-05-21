@@ -20,6 +20,7 @@ class _Page1State extends State<Page1> {
         ),
         FechaWidget(),
         _boton(),
+        SizedBox(height: 40.0),
       ],
     );
   }
@@ -63,6 +64,7 @@ class _Page1State extends State<Page1> {
             children: [
               Image(
                 image: AssetImage('assets/gifs/fondo.gif'),
+                height: 200.0,
               ),
               Column(
                 children: [
