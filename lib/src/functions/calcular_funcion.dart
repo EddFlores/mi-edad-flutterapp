@@ -1,14 +1,15 @@
-String calcularEdad(int miDia, int miMes, int miAnio) {
+String calcularEdad(
+    int miDia, int miMes, int miAnio, int dia, int mes, int anio) {
   int anioCalculado = 0;
   int mesCalculado = 0;
   int diaCalculado = 0;
 
-  String fechaHoy = new DateTime.now().toString();
+  // String fechaHoy = new DateTime.now().toString();
 
-  //Convierte la fechaHoy a variables enteras
-  int anio = int.parse(fechaHoy.substring(0, 4));
-  int mes = int.parse(fechaHoy.substring(5, 7));
-  int dia = int.parse(fechaHoy.substring(8, 10));
+  // //Convierte la fechaHoy a variables enteras
+  // int anio = int.parse(fechaHoy.substring(0, 4));
+  // int mes = int.parse(fechaHoy.substring(5, 7));
+  // int dia = int.parse(fechaHoy.substring(8, 10));
 
   anioCalculado = anio - miAnio;
 
@@ -16,7 +17,7 @@ String calcularEdad(int miDia, int miMes, int miAnio) {
       miDia > 31 ||
       miMes > 12 ||
       miMes < 1 ||
-      miAnio < anio ||
+      miAnio > anio ||
       anioCalculado < 0) {
     return 'Oooops!\n\nDatos no válidos';
   }

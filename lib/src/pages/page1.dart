@@ -9,9 +9,28 @@ class Page1 extends StatefulWidget {
 
 class _Page1State extends State<Page1> {
   bool _selected = false;
+  int miDia = 11;
+  int miMes = 11;
+  int miAnio = 1989;
+  int dia = 0;
+  int mes = 0;
+  int anio = 0;
+
+  // Obtiene la fecha de hoy
+  String fechaHoy = new DateTime.now().toString();
+
+  // //Convierte la fechaHoy a variables enteras
+  // int anio = int.parse(fechaHoy.substring(0, 4));
+  // int mes = int.parse(fechaHoy.substring(5, 7));
+  // int dia = int.parse(fechaHoy.substring(8, 10));
 
   @override
   Widget build(BuildContext context) {
+    //Convierte la fechaHoy a variables enteras
+    anio = int.parse(fechaHoy.substring(0, 4));
+    mes = int.parse(fechaHoy.substring(5, 7));
+    dia = int.parse(fechaHoy.substring(8, 10));
+
     return Column(
       children: [
         SizedBox(height: 40.0),
@@ -56,6 +75,8 @@ class _Page1State extends State<Page1> {
 
   // Cambia el contenido del botón principal de acuerdo a la acción
   Widget _contenidoBoton() {
+    print('$anio-$mes-$dia');
+    print('$miAnio-$miMes-$miDia');
     if (_selected) {
       return Container(
         color: Colors.transparent,
@@ -71,8 +92,8 @@ class _Page1State extends State<Page1> {
                 children: [
                   SizedBox(height: 40.0),
                   Text(
-                    calcularEdad(
-                        33, 11, 1989), // Llama a la función calcularEdad
+                    calcularEdad(miDia, miMes, miAnio, dia, mes,
+                        anio), // Llama a la función calcularEdad
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.white,
