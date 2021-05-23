@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mi_edad/src/functions/calcular_funcion.dart';
 import 'package:mi_edad/src/widgets/textfield_fecha_widget.dart';
 
 class Page1 extends StatefulWidget {
@@ -70,7 +71,8 @@ class _Page1State extends State<Page1> {
                 children: [
                   SizedBox(height: 40.0),
                   Text(
-                    '( Tengo )\n\n31 años, 10 meses, 19 días',
+                    calcularEdad(
+                        33, 11, 1989), // Llama a la función calcularEdad
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.white,
