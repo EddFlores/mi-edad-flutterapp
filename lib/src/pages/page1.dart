@@ -175,6 +175,7 @@ class _Page1State extends State<Page1> {
 //Interfaz de Cambiar Fecha
 void alertaCambiarFecha(BuildContext context) {
   showDialog(
+    barrierDismissible: false,
     context: context,
     builder: (context) {
       return AlertDialog(
