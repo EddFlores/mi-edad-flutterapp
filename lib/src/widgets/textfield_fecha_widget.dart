@@ -11,6 +11,10 @@ class FechaWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int _diaProvisional = 0;
+    int _mesProvisional = 0;
+    int _anioProvisional = 0;
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: h, vertical: v),
       child: Column(

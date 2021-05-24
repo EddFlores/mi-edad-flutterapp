@@ -66,7 +66,7 @@ class _Page1State extends State<Page1> {
                 ),
               ),
             ),
-            SizedBox(height: 30.0),
+            SizedBox(height: 20.0),
             _boton(),
             SizedBox(height: 150.0),
           ],
@@ -172,7 +172,7 @@ void alertaCambiarFecha(BuildContext context) {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Cambiar fecha para el cálculo [fecha de hoy por default]:',
+                'Cambiar fecha para el cálculo [fecha de hoy por defecto]:',
                 style: TextStyle(fontSize: 16.0),
               ),
               FechaWidget(h: 40.0, v: 20.0),
