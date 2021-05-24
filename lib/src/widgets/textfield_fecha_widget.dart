@@ -24,6 +24,7 @@ class FechaWidget extends StatelessWidget {
               labelText: 'Día',
               hintText: '24',
             ),
+            onChanged: (value) {},
           ),
           SizedBox(height: 30.0),
           // Mes

@@ -14,15 +14,6 @@ class _PrincipalPageState extends State<PrincipalPage> {
         title: Text('Mi edad'),
       ),
       body: SingleChildScrollView(child: Page1()),
-      // floatingActionButton: FloatingActionButton.extended(
-      //   backgroundColor: Colors.grey[700],
-      //   label: Text('Cambiar'),
-      //   icon: Icon(Icons.calendar_today),
-      //   onPressed: () {
-      //     alertaCambiarFecha(context);
-      //   },
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
     );
   }
 }
