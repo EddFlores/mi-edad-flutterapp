@@ -13,16 +13,8 @@ class _Page1State extends State<Page1> {
   // bool fecha.selected = false;
   ScrollController _scrollController = new ScrollController();
 
-  // Obtiene la fecha de hoy
-  String fechaHoy = new DateTime.now().toString();
-
   @override
   Widget build(BuildContext context) {
-    //Convierte "fechaHoy" a variables (global fecha) enteras
-    fecha.anio = int.parse(fechaHoy.substring(0, 4));
-    fecha.mes = int.parse(fechaHoy.substring(5, 7));
-    fecha.dia = int.parse(fechaHoy.substring(8, 10));
-
     return ListView(
       controller: _scrollController,
       children: [
@@ -37,10 +29,6 @@ class _Page1State extends State<Page1> {
                   backgroundColor: Colors.black54,
                   icon: Icon(Icons.calendar_today),
                   onPressed: fecha.eneabledTextFields ? _mostrarAlerta : null,
-                  // () {
-                  //   fecha.switchInputFecha = true;
-                  //   alertaCambiarFecha(context);
-                  // }
                 ),
                 SizedBox(width: 10.0),
               ],
@@ -106,6 +94,7 @@ class _Page1State extends State<Page1> {
       FocusManager.instance.primaryFocus!.unfocus();
     }
     fecha.switchInputFecha = false;
+    // Si el botón está circular
     if (!fecha.selected) {
       fecha.eneabledTextFields = false;
       _scrollController.animateTo(
@@ -113,7 +102,11 @@ class _Page1State extends State<Page1> {
         curve: Curves.easeInOut,
         duration: Duration(milliseconds: 500),
       );
+      // Si el botón tiene el resultado
     } else {
+      fecha.miDia = 0;
+      fecha.miMes = 0;
+      fecha.miAnio = 0;
       fecha.eneabledTextFields = true;
       _scrollController.animateTo(
         _scrollController.position.minScrollExtent,
@@ -141,7 +134,7 @@ class _Page1State extends State<Page1> {
               ),
               Column(
                 children: [
-                  SizedBox(height: 35.0),
+                  SizedBox(height: 25.0),
                   Text(
                     calcularEdad(), // Llama a la función calcularEdad
                     textAlign: TextAlign.center,

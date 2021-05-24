@@ -1,8 +1,13 @@
 library mi_edad.fecha;
 
-int dia = 0;
-int mes = 0;
-int anio = 0;
+// Obtiene la fecha de hoy
+String _fechaHoy = new DateTime.now().toString();
+
+//Convierte "fechaHoy" a variables (global fecha) enteras
+int anio = int.parse(_fechaHoy.substring(0, 4));
+int mes = int.parse(_fechaHoy.substring(5, 7));
+int dia = int.parse(_fechaHoy.substring(8, 10));
+
 int miDia = 0;
 int miMes = 0;
 int miAnio = 0;

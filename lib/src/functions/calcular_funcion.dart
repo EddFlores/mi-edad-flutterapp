@@ -48,7 +48,7 @@ String calcularEdad() {
     diaCalculado = 30 + fecha.dia - fecha.miDia;
   }
 
-  return '( Tengo )\n\n$anioCalculado años, $mesCalculado meses y $diaCalculado días';
+  return '${fecha.miDia} / ${fecha.miMes} / ${fecha.miAnio}\n\n( Tengo )\n$anioCalculado años, $mesCalculado meses y $diaCalculado días';
 }
 
 /////////////////////////////
