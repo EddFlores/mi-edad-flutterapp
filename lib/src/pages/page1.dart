@@ -10,7 +10,7 @@ class Page1 extends StatefulWidget {
 }
 
 class _Page1State extends State<Page1> {
-  bool _selected = false;
+  // bool fecha.selected = false;
   ScrollController _scrollController = new ScrollController();
 
   // Obtiene la fecha de hoy
@@ -22,11 +22,6 @@ class _Page1State extends State<Page1> {
     fecha.anio = int.parse(fechaHoy.substring(0, 4));
     fecha.mes = int.parse(fechaHoy.substring(5, 7));
     fecha.dia = int.parse(fechaHoy.substring(8, 10));
-
-    // Datos de prueba:
-    fecha.miAnio = 1989;
-    fecha.miMes = 11;
-    fecha.miDia = 11;
 
     return ListView(
       controller: _scrollController,
@@ -41,7 +36,11 @@ class _Page1State extends State<Page1> {
                   label: Text('${fecha.dia}/${fecha.mes}/${fecha.anio}'),
                   backgroundColor: Colors.black54,
                   icon: Icon(Icons.calendar_today),
-                  onPressed: () => alertaCambiarFecha(context),
+                  onPressed: fecha.eneabledTextFields ? _mostrarAlerta : null,
+                  // () {
+                  //   fecha.switchInputFecha = true;
+                  //   alertaCambiarFecha(context);
+                  // }
                 ),
                 SizedBox(width: 10.0),
               ],
@@ -75,50 +74,61 @@ class _Page1State extends State<Page1> {
     );
   }
 
+  void _mostrarAlerta() {
+    fecha.switchInputFecha = true;
+    alertaCambiarFecha(context);
+  }
+
   // Botón principal
   Widget _boton() {
     return AnimatedContainer(
       duration: Duration(seconds: 1),
       curve: Curves.fastOutSlowIn,
       child: GestureDetector(
-        onTap: () {
-          final FocusScopeNode focus = FocusScope.of(context);
-          if (!focus.hasPrimaryFocus && focus.hasFocus) {
-            FocusManager.instance.primaryFocus!.unfocus();
-          }
-          if (!_selected) {
-            _scrollController.animateTo(
-              _scrollController.position.maxScrollExtent,
-              curve: Curves.easeInOut,
-              duration: Duration(milliseconds: 500),
-            );
-          } else {
-            _scrollController.animateTo(
-              _scrollController.position.minScrollExtent,
-              curve: Curves.easeInOut,
-              duration: Duration(milliseconds: 500),
-            );
-          }
-          setState(() {
-            _selected = !_selected;
-          });
-        },
+        onTap: _accionBotonPrincipal,
         child: _contenidoBoton(),
       ),
-      width: _selected ? 300 : 120.0,
-      height: _selected ? 200 : 120.0,
+      width: fecha.selected ? 300 : 120.0,
+      height: fecha.selected ? 200 : 120.0,
       decoration: BoxDecoration(
-        borderRadius: _selected
+        borderRadius: fecha.selected
             ? BorderRadius.circular(10.0)
             : BorderRadius.circular(100.0),
-        color: _selected ? Colors.black87 : Colors.blue,
+        color: fecha.selected ? Colors.black87 : Colors.blue,
       ),
     );
   }
 
+  // Acción al hacer tap al botón principal
+  void _accionBotonPrincipal() {
+    final FocusScopeNode focus = FocusScope.of(context);
+    if (!focus.hasPrimaryFocus && focus.hasFocus) {
+      FocusManager.instance.primaryFocus!.unfocus();
+    }
+    fecha.switchInputFecha = false;
+    if (!fecha.selected) {
+      fecha.eneabledTextFields = false;
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        curve: Curves.easeInOut,
+        duration: Duration(milliseconds: 500),
+      );
+    } else {
+      fecha.eneabledTextFields = true;
+      _scrollController.animateTo(
+        _scrollController.position.minScrollExtent,
+        curve: Curves.easeInOut,
+        duration: Duration(milliseconds: 500),
+      );
+    }
+    setState(() {
+      fecha.selected = !fecha.selected;
+    });
+  }
+
   // Cambia el contenido del botón principal de acuerdo a la acción
   Widget _contenidoBoton() {
-    if (_selected) {
+    if (fecha.selected) {
       return Container(
         color: Colors.transparent,
         child: SingleChildScrollView(
