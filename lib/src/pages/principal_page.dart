@@ -13,7 +13,7 @@ class _PrincipalPageState extends State<PrincipalPage> {
       appBar: AppBar(
         title: Text('Mi edad'),
       ),
-      body: SingleChildScrollView(child: Page1()),
+      body: Page1(),
     );
   }
 }

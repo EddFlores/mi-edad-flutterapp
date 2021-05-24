@@ -11,6 +11,7 @@ class Page1 extends StatefulWidget {
 
 class _Page1State extends State<Page1> {
   bool _selected = false;
+  ScrollController _scrollController = new ScrollController();
 
   // Obtiene la fecha de hoy
   String fechaHoy = new DateTime.now().toString();
@@ -27,43 +28,49 @@ class _Page1State extends State<Page1> {
     fecha.miMes = 11;
     fecha.miDia = 11;
 
-    return Column(
+    return ListView(
+      controller: _scrollController,
       children: [
-        SizedBox(height: 10.0),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+        Column(
           children: [
-            FloatingActionButton.extended(
-              label: Text('${fecha.dia}/${fecha.mes}/${fecha.anio}'),
-              backgroundColor: Colors.black54,
-              icon: Icon(Icons.calendar_today),
-              onPressed: () => alertaCambiarFecha(context),
-            ),
-            SizedBox(width: 10.0),
-          ],
-        ),
-        SizedBox(height: 5.0),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 25.0),
-          child: Card(
-            elevation: 10.0,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0)),
-            child: Column(
+            SizedBox(height: 10.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                SizedBox(height: 10.0),
-                Text(
-                  '( Nací el... )',
-                  style: TextStyle(fontSize: 40.0, fontFamily: 'Milla'),
+                FloatingActionButton.extended(
+                  label: Text('${fecha.dia}/${fecha.mes}/${fecha.anio}'),
+                  backgroundColor: Colors.black54,
+                  icon: Icon(Icons.calendar_today),
+                  onPressed: () => alertaCambiarFecha(context),
                 ),
-                FechaWidget(),
+                SizedBox(width: 10.0),
               ],
             ),
-          ),
+            SizedBox(height: 10.0),
+            // Card de Fecha
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 25.0),
+              child: Card(
+                elevation: 10.0,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0)),
+                child: Column(
+                  children: [
+                    SizedBox(height: 10.0),
+                    Text(
+                      '( Nací el... )',
+                      style: TextStyle(fontSize: 40.0, fontFamily: 'Milla'),
+                    ),
+                    FechaWidget(),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 30.0),
+            _boton(),
+            SizedBox(height: 150.0),
+          ],
         ),
-        SizedBox(height: 10.0),
-        _boton(),
-        SizedBox(height: 40.0),
       ],
     );
   }
@@ -78,6 +85,19 @@ class _Page1State extends State<Page1> {
           final FocusScopeNode focus = FocusScope.of(context);
           if (!focus.hasPrimaryFocus && focus.hasFocus) {
             FocusManager.instance.primaryFocus!.unfocus();
+          }
+          if (!_selected) {
+            _scrollController.animateTo(
+              _scrollController.position.maxScrollExtent,
+              curve: Curves.easeInOut,
+              duration: Duration(milliseconds: 500),
+            );
+          } else {
+            _scrollController.animateTo(
+              _scrollController.position.minScrollExtent,
+              curve: Curves.easeInOut,
+              duration: Duration(milliseconds: 500),
+            );
           }
           setState(() {
             _selected = !_selected;
@@ -113,14 +133,7 @@ class _Page1State extends State<Page1> {
                 children: [
                   SizedBox(height: 35.0),
                   Text(
-                    calcularEdad(
-                        // fecha.miDia,
-                        // fecha.miMes,
-                        // fecha.miAnio,
-                        // fecha.dia,
-                        // fecha.mes,
-                        // fecha.anio,
-                        ), // Llama a la función calcularEdad
+                    calcularEdad(), // Llama a la función calcularEdad
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.white,
