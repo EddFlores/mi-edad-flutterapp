@@ -43,7 +43,11 @@ class FechaWidget extends StatelessWidget {
                 } else {
                   fecha.miDia = int.parse(value);
                 }
-                print('Dia provisional: ${fecha.diaProvisional}');
+              } else {
+                // Caso TextField cambiar fecha
+                if (int.tryParse(value) != null) {
+                  fecha.diaProvisional = int.parse(value);
+                }
               }
             },
           ),
@@ -70,7 +74,11 @@ class FechaWidget extends StatelessWidget {
                 } else {
                   fecha.miMes = int.parse(value);
                 }
-                print('Mes provisional: ${fecha.mesProvisional}');
+              } else {
+                // Caso TextField cambiar fecha
+                if (int.tryParse(value) != null) {
+                  fecha.mesProvisional = int.parse(value);
+                }
               }
             },
           ),
@@ -97,7 +105,11 @@ class FechaWidget extends StatelessWidget {
                 } else {
                   fecha.miAnio = int.parse(value);
                 }
-                print('Año provisional: ${fecha.anioProvisional}');
+              } else {
+                // Caso TextField cambiar fecha
+                if (int.tryParse(value) != null) {
+                  fecha.anioProvisional = int.parse(value);
+                }
               }
             },
           ),

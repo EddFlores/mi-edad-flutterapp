@@ -28,7 +28,13 @@ class _Page1State extends State<Page1> {
                   label: Text('${fecha.dia}/${fecha.mes}/${fecha.anio}'),
                   backgroundColor: Colors.black54,
                   icon: Icon(Icons.calendar_today),
-                  onPressed: fecha.eneabledTextFields ? _mostrarAlerta : null,
+                  onPressed: () {
+                    _quitarFoco();
+                    if (fecha.eneabledTextFields) {
+                      _mostrarAlerta();
+                    }
+                  },
+                  // fecha.eneabledTextFields ? _mostrarAlerta : null,
                 ),
                 SizedBox(width: 10.0),
               ],
@@ -87,13 +93,18 @@ class _Page1State extends State<Page1> {
     );
   }
 
-  // Acción al hacer tap al botón principal
-  void _accionBotonPrincipal() {
+  // Funcion quitar foco
+  void _quitarFoco() {
     final FocusScopeNode focus = FocusScope.of(context);
     if (!focus.hasPrimaryFocus && focus.hasFocus) {
       FocusManager.instance.primaryFocus!.unfocus();
     }
-    fecha.switchInputFecha = false;
+  }
+
+  // Acción al hacer tap al botón principal
+  void _accionBotonPrincipal() {
+    _quitarFoco();
+
     // Si el botón está circular
     if (!fecha.selected) {
       fecha.eneabledTextFields = false;
@@ -134,13 +145,13 @@ class _Page1State extends State<Page1> {
               ),
               Column(
                 children: [
-                  SizedBox(height: 25.0),
+                  SizedBox(height: 30.0),
                   Text(
                     calcularEdad(), // Llama a la función calcularEdad
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: 40.0,
+                        fontSize: 35.0,
                         fontFamily: 'Milla'),
                   ),
                 ],
@@ -175,21 +186,41 @@ void alertaCambiarFecha(BuildContext context) {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Cambiar fecha para el cálculo [fecha de hoy por defecto]:',
+                'Puedes cambiar la fecha para el cálculo [fecha de hoy por defecto]:',
                 style: TextStyle(fontSize: 16.0),
               ),
               FechaWidget(h: 40.0, v: 20.0),
             ],
           ),
         ),
+        // BOTONES
         actions: [
           TextButton(
             child: Text('Cancelar'),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () {
+              fecha.switchInputFecha = false;
+              fecha.diaProvisional = 0;
+              fecha.mesProvisional = 0;
+              fecha.anioProvisional = 0;
+              Navigator.of(context).pop();
+            },
           ),
           TextButton(
             child: Text('Ok'),
             onPressed: () {
+              fecha.switchInputFecha = false;
+              if (fecha.diaProvisional > 0 &&
+                  fecha.diaProvisional < 32 &&
+                  fecha.mesProvisional < 13 &&
+                  fecha.mesProvisional > 0 &&
+                  fecha.anioProvisional > 1000) {
+                fecha.dia = fecha.diaProvisional;
+                fecha.mes = fecha.mesProvisional;
+                fecha.anio = fecha.anioProvisional;
+              }
+              fecha.diaProvisional = 0;
+              fecha.mesProvisional = 0;
+              fecha.anioProvisional = 0;
               Navigator.of(context).pop();
             },
           ),
