@@ -1,4 +1,4 @@
-package com.example.mi_edad
+package com.eddflores.miedad
 
 import io.flutter.embedding.android.FlutterActivity
 

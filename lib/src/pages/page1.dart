@@ -34,7 +34,6 @@ class _Page1State extends State<Page1> {
                       _mostrarAlerta();
                     }
                   },
-                  // fecha.eneabledTextFields ? _mostrarAlerta : null,
                 ),
                 SizedBox(width: 10.0),
               ],
@@ -42,8 +41,10 @@ class _Page1State extends State<Page1> {
             SizedBox(height: 10.0),
             // Card de Fecha
             Container(
+              width: 400.0, // Tamaño máximo
               padding: EdgeInsets.symmetric(horizontal: 25.0),
               child: Card(
+                // color: Colors.white,
                 elevation: 10.0,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0)),
@@ -183,15 +184,18 @@ void alertaCambiarFecha(BuildContext context) {
           borderRadius: BorderRadius.circular(30.0),
         ),
         content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'Puedes cambiar la fecha para el cálculo [fecha de hoy por defecto]:',
-                style: TextStyle(fontSize: 16.0),
-              ),
-              FechaWidget(h: 40.0, v: 20.0),
-            ],
+          child: Container(
+            width: 300.0, // Tamaño máximo
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Puedes cambiar la fecha para el cálculo [fecha de hoy por defecto]:',
+                  style: TextStyle(fontSize: 16.0),
+                ),
+                FechaWidget(h: 40.0, v: 20.0),
+              ],
+            ),
           ),
         ),
         // BOTONES

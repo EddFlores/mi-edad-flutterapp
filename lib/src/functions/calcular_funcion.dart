@@ -15,7 +15,7 @@ String calcularEdad() {
       fecha.miMes < 1 ||
       fecha.miAnio > fecha.anio ||
       anioCalculado < 0) {
-    return 'Oooops!\n\nDatos no válidos';
+    return 'Oooops!\n\nInformación \nno válida';
   }
 
   if ((fecha.dia == fecha.miDia) && (fecha.mes == fecha.miMes)) {
