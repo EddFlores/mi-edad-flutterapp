@@ -10,7 +10,6 @@ class Page1 extends StatefulWidget {
 }
 
 class _Page1State extends State<Page1> {
-  // bool fecha.selected = false;
   ScrollController _scrollController = new ScrollController();
 
   @override
@@ -21,45 +20,10 @@ class _Page1State extends State<Page1> {
         Column(
           children: [
             SizedBox(height: 10.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                FloatingActionButton.extended(
-                  label: Text('${fecha.dia}/${fecha.mes}/${fecha.anio}'),
-                  backgroundColor: Colors.black54,
-                  icon: Icon(Icons.calendar_today),
-                  onPressed: () {
-                    _quitarFoco();
-                    if (fecha.eneabledTextFields) {
-                      _mostrarAlerta();
-                    }
-                  },
-                ),
-                SizedBox(width: 10.0),
-              ],
-            ),
+            _botonFechaFlotante(),
             SizedBox(height: 10.0),
             // Card de Fecha
-            Container(
-              width: 400.0, // Tamaño máximo
-              padding: EdgeInsets.symmetric(horizontal: 25.0),
-              child: Card(
-                // color: Colors.white,
-                elevation: 10.0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0)),
-                child: Column(
-                  children: [
-                    SizedBox(height: 10.0),
-                    Text(
-                      '( Nací el... )',
-                      style: TextStyle(fontSize: 40.0, fontFamily: 'Milla'),
-                    ),
-                    FechaWidget(),
-                  ],
-                ),
-              ),
-            ),
+            _tarjetaPrincipal(),
             SizedBox(height: 20.0),
             _boton(),
             SizedBox(height: 150.0),
@@ -92,14 +56,6 @@ class _Page1State extends State<Page1> {
         color: fecha.selected ? Colors.black87 : Colors.blue,
       ),
     );
-  }
-
-  // Funcion quitar foco
-  void _quitarFoco() {
-    final FocusScopeNode focus = FocusScope.of(context);
-    if (!focus.hasPrimaryFocus && focus.hasFocus) {
-      FocusManager.instance.primaryFocus!.unfocus();
-    }
   }
 
   // Acción al hacer tap al botón principal
@@ -169,6 +125,57 @@ class _Page1State extends State<Page1> {
           // width: 200.0,
         ),
       );
+    }
+  }
+
+  Widget _botonFechaFlotante() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        FloatingActionButton.extended(
+          label: Text('${fecha.dia}/${fecha.mes}/${fecha.anio}'),
+          backgroundColor: Colors.black54,
+          icon: Icon(Icons.calendar_today),
+          onPressed: () {
+            _quitarFoco();
+            if (fecha.eneabledTextFields) {
+              _mostrarAlerta();
+            }
+          },
+        ),
+        SizedBox(width: 10.0),
+      ],
+    );
+  }
+
+  Widget _tarjetaPrincipal() {
+    return Container(
+      width: 400.0, // Tamaño máximo
+      padding: EdgeInsets.symmetric(horizontal: 25.0),
+      child: Card(
+        // color: Colors.white,
+        elevation: 10.0,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+        child: Column(
+          children: [
+            SizedBox(height: 10.0),
+            Text(
+              '( Nací el... )',
+              style: TextStyle(fontSize: 40.0, fontFamily: 'Milla'),
+            ),
+            FechaWidget(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Funcion quitar foco
+  void _quitarFoco() {
+    final FocusScopeNode focus = FocusScope.of(context);
+    if (!focus.hasPrimaryFocus && focus.hasFocus) {
+      FocusManager.instance.primaryFocus!.unfocus();
     }
   }
 }

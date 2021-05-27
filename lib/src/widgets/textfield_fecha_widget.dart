@@ -12,6 +12,7 @@ class FechaWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Controladores de los TextFields
     final TextEditingController controllerDia = TextEditingController(text: '');
     final TextEditingController controllerMes = TextEditingController(text: '');
     final TextEditingController controllerAnio =
@@ -22,99 +23,90 @@ class FechaWidget extends StatelessWidget {
       child: Column(
         children: [
           // Día
-          TextField(
-            enabled: fecha.eneabledTextFields,
-            textInputAction: TextInputAction.unspecified,
-            autofocus: false,
-            controller: controllerDia,
-            textAlign: TextAlign.center,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Día',
-              hintText: fecha.switchInputFecha ? '${fecha.dia}' : '21',
-            ),
-            // Función cuando cambia un valor en el TextFueld Día
-            onChanged: (value) {
-              // Caso TextField principal
-              if (!fecha.switchInputFecha) {
-                if (int.tryParse(value) == null) {
-                  fecha.miDia = 0;
-                } else {
-                  fecha.miDia = int.parse(value);
-                }
-              } else {
-                // Caso TextField cambiar fecha
-                if (int.tryParse(value) != null) {
-                  fecha.diaProvisional = int.parse(value);
-                }
-              }
-            },
-          ),
+          _textFieldFecha('Día', fecha.dia, '21', controllerDia),
           SizedBox(height: 30.0),
           // Mes
-          TextField(
-            enabled: fecha.eneabledTextFields,
-            textInputAction: TextInputAction.unspecified,
-            autofocus: false,
-            controller: controllerMes,
-            textAlign: TextAlign.center,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Mes',
-              hintText: fecha.switchInputFecha ? '${fecha.mes}' : '12',
-            ),
-            // Función cuando cambia un valor en el TextFueld Mes
-            onChanged: (value) {
-              // Caso TextField principal
-              if (!fecha.switchInputFecha) {
-                if (int.tryParse(value) == null) {
-                  fecha.miMes = 0;
-                } else {
-                  fecha.miMes = int.parse(value);
-                }
-              } else {
-                // Caso TextField cambiar fecha
-                if (int.tryParse(value) != null) {
-                  fecha.mesProvisional = int.parse(value);
-                }
-              }
-            },
-          ),
+          _textFieldFecha('Mes', fecha.mes, '12', controllerMes),
           SizedBox(height: 30.0),
           // Año
-          TextField(
-            enabled: fecha.eneabledTextFields,
-            textInputAction: TextInputAction.unspecified,
-            autofocus: false,
-            controller: controllerAnio,
-            textAlign: TextAlign.center,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Año',
-              hintText: fecha.switchInputFecha ? '${fecha.anio}' : '2020',
-            ),
-            // Función cuando cambia un valor en el TextFueld Año
-            onChanged: (value) {
-              // TextField principal
-              if (!fecha.switchInputFecha) {
-                if (int.tryParse(value) == null) {
-                  fecha.miAnio = 0;
-                } else {
-                  fecha.miAnio = int.parse(value);
-                }
-              } else {
-                // Caso TextField cambiar fecha
-                if (int.tryParse(value) != null) {
-                  fecha.anioProvisional = int.parse(value);
-                }
-              }
-            },
-          ),
+          _textFieldFecha('Año', fecha.anio, '1999', controllerAnio),
         ],
       ),
     );
+  }
+
+  Widget _textFieldFecha(String tipoFecha, int fechaObtenida, String porDefecto,
+      TextEditingController controlador) {
+    return TextField(
+      enabled: fecha.eneabledTextFields,
+      textInputAction: TextInputAction.unspecified,
+      autofocus: false,
+      controller: controlador,
+      textAlign: TextAlign.center,
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: tipoFecha,
+        hintText: fecha.switchInputFecha ? '$fechaObtenida' : porDefecto,
+      ),
+      // Función cuando cambia un valor en el TextFueld Año, Mes o Día
+      onChanged: (value) {
+        if (tipoFecha == 'Año') {
+          _fechaAnioTextField(value);
+        } else if (tipoFecha == 'Mes') {
+          _fechaMesTextField(value);
+        } else if (tipoFecha == 'Día') {
+          _fechaDiaTextField(value);
+        }
+      },
+    );
+  }
+
+  void _fechaDiaTextField(String value) {
+    // Caso TextField principal
+    if (!fecha.switchInputFecha) {
+      if (int.tryParse(value) == null) {
+        fecha.miDia = 0;
+      } else {
+        fecha.miDia = int.parse(value);
+      }
+    } else {
+      // Caso TextField cambiar fecha
+      if (int.tryParse(value) != null) {
+        fecha.diaProvisional = int.parse(value);
+      }
+    }
+  }
+
+  void _fechaMesTextField(String value) {
+    // Caso TextField principal
+    if (!fecha.switchInputFecha) {
+      if (int.tryParse(value) == null) {
+        fecha.miMes = 0;
+      } else {
+        fecha.miMes = int.parse(value);
+      }
+    } else {
+      // Caso TextField cambiar fecha
+      if (int.tryParse(value) != null) {
+        fecha.mesProvisional = int.parse(value);
+      }
+    }
+  }
+
+  void _fechaAnioTextField(String value) {
+    // TextField principal
+    if (!fecha.switchInputFecha) {
+      if (int.tryParse(value) == null) {
+        fecha.miAnio = 0;
+      } else {
+        fecha.miAnio = int.parse(value);
+      }
+    } else {
+      // Caso TextField cambiar fecha
+      if (int.tryParse(value) != null) {
+        fecha.anioProvisional = int.parse(value);
+      }
+    }
   }
 }
