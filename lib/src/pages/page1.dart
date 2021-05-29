@@ -208,6 +208,15 @@ void alertaCambiarFecha(BuildContext context) {
         // BOTONES
         actions: [
           TextButton(
+              onPressed: () {
+                String _fechaHoy = new DateTime.now().toString();
+                fecha.anio = int.parse(_fechaHoy.substring(0, 4));
+                fecha.mes = int.parse(_fechaHoy.substring(5, 7));
+                fecha.dia = int.parse(_fechaHoy.substring(8, 10));
+                Navigator.of(context).pop();
+              },
+              child: Text("Resetear")),
+          TextButton(
             child: Text('Cancelar'),
             onPressed: () {
               fecha.switchInputFecha = false;
