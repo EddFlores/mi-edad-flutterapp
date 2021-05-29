@@ -8,6 +8,10 @@ int anio = int.parse(_fechaHoy.substring(0, 4));
 int mes = int.parse(_fechaHoy.substring(5, 7));
 int dia = int.parse(_fechaHoy.substring(8, 10));
 
+final int anioFinal = int.parse(_fechaHoy.substring(0, 4));
+final int mesFinal = int.parse(_fechaHoy.substring(5, 7));
+final int diaFinal = int.parse(_fechaHoy.substring(8, 10));
+
 int miDia = 0;
 int miMes = 0;
 int miAnio = 0;

@@ -23,13 +23,13 @@ class FechaWidget extends StatelessWidget {
       child: Column(
         children: [
           // Día
-          _textFieldFecha('Día', fecha.dia, '21', controllerDia),
+          _textFieldFecha('Día', fecha.dia, 'Ejemplo: 5', controllerDia),
           SizedBox(height: 30.0),
           // Mes
-          _textFieldFecha('Mes', fecha.mes, '12', controllerMes),
+          _textFieldFecha('Mes', fecha.mes, 'Ejemplo: 12', controllerMes),
           SizedBox(height: 30.0),
           // Año
-          _textFieldFecha('Año', fecha.anio, '1999', controllerAnio),
+          _textFieldFecha('Año', fecha.anio, 'Ejemplo: 1999', controllerAnio),
         ],
       ),
     );
@@ -47,7 +47,8 @@ class FechaWidget extends StatelessWidget {
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: tipoFecha,
-        hintText: fecha.switchInputFecha ? '$fechaObtenida' : porDefecto,
+        hintText:
+            fecha.switchInputFecha ? 'Actual: $fechaObtenida' : porDefecto,
       ),
       // Función cuando cambia un valor en el TextFueld Año, Mes o Día
       onChanged: (value) {

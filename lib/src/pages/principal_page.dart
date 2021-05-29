@@ -8,7 +8,9 @@ class PrincipalPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Mi edad'),
       ),
-      body: Page1(),
+      body: SingleChildScrollView(
+        child: Page1(),
+      ),
     );
   }
 }

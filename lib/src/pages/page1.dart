@@ -10,26 +10,29 @@ class Page1 extends StatefulWidget {
 }
 
 class _Page1State extends State<Page1> {
-  ScrollController _scrollController = new ScrollController();
-
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      controller: _scrollController,
-      children: [
-        Column(
-          children: [
-            SizedBox(height: 10.0),
-            _botonFechaFlotante(),
-            SizedBox(height: 10.0),
-            // Card de Fecha
-            _tarjetaPrincipal(),
-            SizedBox(height: 20.0),
-            _boton(),
-            SizedBox(height: 150.0),
-          ],
-        ),
-      ],
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      child: Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          // Boton flotante Fecha
+          Positioned(
+            top: 10.0,
+            right: 0.0,
+            child: _botonFechaFlotante(),
+          ),
+          // Card de Fecha
+          Positioned(
+            top: 70.0,
+            child: _tarjetaPrincipal(),
+          ),
+          // Botón principal
+          _boton(),
+        ],
+      ),
     );
   }
 
@@ -40,21 +43,23 @@ class _Page1State extends State<Page1> {
 
   // Botón principal
   Widget _boton() {
-    return AnimatedContainer(
+    return AnimatedPositioned(
+      top: fecha.selected ? 150.0 : 440.0,
       duration: Duration(seconds: 1),
       curve: Curves.fastOutSlowIn,
-      child: GestureDetector(
-        onTap: _accionBotonPrincipal,
-        child: _contenidoBoton(),
-      ),
       width: fecha.selected ? 300 : 120.0,
-      height: fecha.selected ? 200 : 120.0,
-      decoration: BoxDecoration(
-        borderRadius: fecha.selected
-            ? BorderRadius.circular(10.0)
-            : BorderRadius.circular(100.0),
-        color: fecha.selected ? Colors.black87 : Colors.blue,
-      ),
+      height: fecha.selected ? 250 : 120.0,
+      child: GestureDetector(
+          onTap: _accionBotonPrincipal,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: fecha.selected
+                  ? BorderRadius.circular(10.0)
+                  : BorderRadius.circular(100.0),
+              color: fecha.selected ? Colors.black87 : Colors.blue,
+            ),
+            child: _contenidoBoton(),
+          )),
     );
   }
 
@@ -65,22 +70,11 @@ class _Page1State extends State<Page1> {
     // Si el botón está circular
     if (!fecha.selected) {
       fecha.eneabledTextFields = false;
-      _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
-        curve: Curves.easeInOut,
-        duration: Duration(milliseconds: 500),
-      );
-      // Si el botón tiene el resultado
     } else {
       fecha.miDia = 0;
       fecha.miMes = 0;
       fecha.miAnio = 0;
       fecha.eneabledTextFields = true;
-      _scrollController.animateTo(
-        _scrollController.position.minScrollExtent,
-        curve: Curves.easeInOut,
-        duration: Duration(milliseconds: 500),
-      );
     }
     setState(() {
       fecha.selected = !fecha.selected;
@@ -91,38 +85,30 @@ class _Page1State extends State<Page1> {
   Widget _contenidoBoton() {
     if (fecha.selected) {
       return Container(
-        color: Colors.transparent,
-        child: SingleChildScrollView(
-          child: Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              Image(
-                image: AssetImage('assets/gifs/fondo.gif'),
-                height: 200.0,
-              ),
-              Column(
-                children: [
-                  SizedBox(height: 30.0),
-                  Text(
-                    calcularEdad(), // Llama a la función calcularEdad
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 35.0,
-                        fontFamily: 'Milla'),
-                  ),
-                ],
-              ),
-            ],
-          ),
+        //   child:
+        // SingleChildScrollView(
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Image(
+              image: AssetImage('assets/gifs/fondo.gif'),
+              height: 240.0,
+            ),
+            Text(
+              calcularEdad(), // Llama a la función calcularEdad
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Colors.white, fontSize: 35.0, fontFamily: 'Milla'),
+            ),
+          ],
         ),
+        // ),
       );
     } else {
       return Container(
         color: Colors.transparent,
         child: Image(
           image: AssetImage('assets/gifs/birthday-transparent.gif'),
-          // width: 200.0,
         ),
       );
     }
@@ -137,10 +123,12 @@ class _Page1State extends State<Page1> {
           backgroundColor: Colors.black54,
           icon: Icon(Icons.calendar_today),
           onPressed: () {
+            fecha.selected = false;
+            fecha.eneabledTextFields = true;
             _quitarFoco();
-            if (fecha.eneabledTextFields) {
-              _mostrarAlerta();
-            }
+            // if (fecha.eneabledTextFields) {
+            _mostrarAlerta();
+            // }
           },
         ),
         SizedBox(width: 10.0),
@@ -150,7 +138,8 @@ class _Page1State extends State<Page1> {
 
   Widget _tarjetaPrincipal() {
     return Container(
-      width: 400.0, // Tamaño máximo
+      width: 370.0, // Tamaño máximo
+      height: 360.0, // Alto
       padding: EdgeInsets.symmetric(horizontal: 25.0),
       child: Card(
         // color: Colors.white,
@@ -208,14 +197,19 @@ void alertaCambiarFecha(BuildContext context) {
         // BOTONES
         actions: [
           TextButton(
-              onPressed: () {
-                String _fechaHoy = new DateTime.now().toString();
-                fecha.anio = int.parse(_fechaHoy.substring(0, 4));
-                fecha.mes = int.parse(_fechaHoy.substring(5, 7));
-                fecha.dia = int.parse(_fechaHoy.substring(8, 10));
-                Navigator.of(context).pop();
-              },
-              child: Text("Resetear")),
+            onPressed: () {
+              fecha.diaProvisional = 0;
+              fecha.mesProvisional = 0;
+              fecha.anioProvisional = 0;
+              fecha.switchInputFecha = false;
+              fecha.anio = fecha.anioFinal;
+              fecha.mes = fecha.mesFinal;
+              fecha.dia = fecha.diaFinal;
+              Navigator.of(context).pop();
+            },
+            child: Text("Resetear"),
+          ),
+          SizedBox(width: 10.0),
           TextButton(
             child: Text('Cancelar'),
             onPressed: () {
