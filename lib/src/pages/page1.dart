@@ -14,7 +14,7 @@ class _Page1State extends State<Page1> {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
+      height: 580.0,
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
