@@ -68,13 +68,13 @@ class _Page1State extends State<Page1> {
     _quitarFoco();
 
     // Si el botón está circular
-    if (fecha.selected) {
-      // fecha.eneabledTextFields = false;
-      // } else {
+    if (!fecha.selected) {
+      fecha.eneabledTextFields = false;
+    } else {
       fecha.miDia = 0;
       fecha.miMes = 0;
       fecha.miAnio = 0;
-      // fecha.eneabledTextFields = true;
+      fecha.eneabledTextFields = true;
     }
     setState(() {
       fecha.selected = !fecha.selected;
@@ -124,7 +124,7 @@ class _Page1State extends State<Page1> {
           icon: Icon(Icons.calendar_today),
           onPressed: () {
             fecha.selected = false;
-            // fecha.eneabledTextFields = true;
+            fecha.eneabledTextFields = true;
             _quitarFoco();
             // if (fecha.eneabledTextFields) {
             _mostrarAlerta();

@@ -38,9 +38,9 @@ class FechaWidget extends StatelessWidget {
   Widget _textFieldFecha(String tipoFecha, int fechaObtenida, String porDefecto,
       TextEditingController controlador) {
     return TextField(
-      // enabled: fecha.eneabledTextFields,
+      enabled: fecha.eneabledTextFields,
       textInputAction: TextInputAction.unspecified,
-      // autofocus: false,
+      autofocus: false,
       controller: controlador,
       textAlign: TextAlign.center,
       keyboardType: TextInputType.number,
