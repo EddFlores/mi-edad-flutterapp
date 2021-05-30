@@ -66,15 +66,11 @@ class _Page1State extends State<Page1> {
   // Acción al hacer tap al botón principal
   void _accionBotonPrincipal() {
     _quitarFoco();
-
-    // Si el botón está circular
+    // Si el botón está seleccionado
     if (fecha.selected) {
-      // fecha.eneabledTextFields = false;
-      // } else {
       fecha.miDia = 0;
       fecha.miMes = 0;
       fecha.miAnio = 0;
-      // fecha.eneabledTextFields = true;
     }
     setState(() {
       fecha.selected = !fecha.selected;
@@ -85,8 +81,6 @@ class _Page1State extends State<Page1> {
   Widget _contenidoBoton() {
     if (fecha.selected) {
       return Container(
-        //   child:
-        // SingleChildScrollView(
         child: Stack(
           alignment: Alignment.center,
           children: [
@@ -102,7 +96,6 @@ class _Page1State extends State<Page1> {
             ),
           ],
         ),
-        // ),
       );
     } else {
       return Container(
@@ -124,11 +117,8 @@ class _Page1State extends State<Page1> {
           icon: Icon(Icons.calendar_today),
           onPressed: () {
             fecha.selected = false;
-            // fecha.eneabledTextFields = true;
             _quitarFoco();
-            // if (fecha.eneabledTextFields) {
             _mostrarAlerta();
-            // }
           },
         ),
         SizedBox(width: 10.0),
@@ -142,7 +132,6 @@ class _Page1State extends State<Page1> {
       height: 360.0, // Alto
       padding: EdgeInsets.symmetric(horizontal: 25.0),
       child: Card(
-        // color: Colors.white,
         elevation: 10.0,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
@@ -162,10 +151,7 @@ class _Page1State extends State<Page1> {
 
   // Funcion quitar foco
   void _quitarFoco() {
-    final FocusScopeNode focus = FocusScope.of(context);
-    if (!focus.hasPrimaryFocus && focus.hasFocus) {
-      FocusManager.instance.primaryFocus!.unfocus();
-    }
+    FocusScope.of(context).requestFocus(new FocusNode());
   }
 }
 
@@ -175,71 +161,74 @@ void alertaCambiarFecha(BuildContext context) {
     barrierDismissible: false,
     context: context,
     builder: (context) {
-      return AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        content: SingleChildScrollView(
-          child: Container(
-            width: 300.0, // Tamaño máximo
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Puedes cambiar la fecha para el cálculo [fecha de hoy por defecto]:',
-                  style: TextStyle(fontSize: 16.0),
-                ),
-                FechaWidget(h: 40.0, v: 20.0),
-              ],
+      return WillPopScope(
+        onWillPop: () async => false,
+        child: AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+          content: SingleChildScrollView(
+            child: Container(
+              width: 300.0, // Tamaño máximo
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Puedes cambiar la fecha para el cálculo [fecha de hoy por defecto]:',
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                  FechaWidget(h: 40.0, v: 20.0),
+                ],
+              ),
             ),
           ),
+          // BOTONES
+          actions: [
+            TextButton(
+              onPressed: () {
+                fecha.diaProvisional = 0;
+                fecha.mesProvisional = 0;
+                fecha.anioProvisional = 0;
+                fecha.switchInputFecha = false;
+                fecha.anio = fecha.anioFinal;
+                fecha.mes = fecha.mesFinal;
+                fecha.dia = fecha.diaFinal;
+                Navigator.of(context).pop();
+              },
+              child: Text("Resetear"),
+            ),
+            SizedBox(width: 10.0),
+            TextButton(
+              child: Text('Cancelar'),
+              onPressed: () {
+                fecha.switchInputFecha = false;
+                fecha.diaProvisional = 0;
+                fecha.mesProvisional = 0;
+                fecha.anioProvisional = 0;
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Ok'),
+              onPressed: () {
+                fecha.switchInputFecha = false;
+                if (fecha.diaProvisional > 0 &&
+                    fecha.diaProvisional < 32 &&
+                    fecha.mesProvisional < 13 &&
+                    fecha.mesProvisional > 0 &&
+                    fecha.anioProvisional > 1000) {
+                  fecha.dia = fecha.diaProvisional;
+                  fecha.mes = fecha.mesProvisional;
+                  fecha.anio = fecha.anioProvisional;
+                }
+                fecha.diaProvisional = 0;
+                fecha.mesProvisional = 0;
+                fecha.anioProvisional = 0;
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
         ),
-        // BOTONES
-        actions: [
-          TextButton(
-            onPressed: () {
-              fecha.diaProvisional = 0;
-              fecha.mesProvisional = 0;
-              fecha.anioProvisional = 0;
-              fecha.switchInputFecha = false;
-              fecha.anio = fecha.anioFinal;
-              fecha.mes = fecha.mesFinal;
-              fecha.dia = fecha.diaFinal;
-              Navigator.of(context).pop();
-            },
-            child: Text("Resetear"),
-          ),
-          SizedBox(width: 10.0),
-          TextButton(
-            child: Text('Cancelar'),
-            onPressed: () {
-              fecha.switchInputFecha = false;
-              fecha.diaProvisional = 0;
-              fecha.mesProvisional = 0;
-              fecha.anioProvisional = 0;
-              Navigator.of(context).pop();
-            },
-          ),
-          TextButton(
-            child: Text('Ok'),
-            onPressed: () {
-              fecha.switchInputFecha = false;
-              if (fecha.diaProvisional > 0 &&
-                  fecha.diaProvisional < 32 &&
-                  fecha.mesProvisional < 13 &&
-                  fecha.mesProvisional > 0 &&
-                  fecha.anioProvisional > 1000) {
-                fecha.dia = fecha.diaProvisional;
-                fecha.mes = fecha.mesProvisional;
-                fecha.anio = fecha.anioProvisional;
-              }
-              fecha.diaProvisional = 0;
-              fecha.mesProvisional = 0;
-              fecha.anioProvisional = 0;
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
       );
     },
   );

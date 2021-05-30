@@ -20,4 +20,3 @@ int mesProvisional = 0;
 int anioProvisional = 0;
 bool switchInputFecha = false;
 bool selected = false;
-// bool eneabledTextFields = true;
