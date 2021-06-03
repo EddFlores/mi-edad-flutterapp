@@ -128,8 +128,7 @@ class _Page1State extends State<Page1> {
 
   Widget _tarjetaPrincipal() {
     return Container(
-      width: 370.0, // Tamaño máximo
-      height: 360.0, // Alto
+      width: 390.0, // Tamaño máximo
       padding: EdgeInsets.symmetric(horizontal: 25.0),
       child: Card(
         elevation: 10.0,
